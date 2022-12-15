@@ -863,10 +863,10 @@ contract NetFitFarming is OwnableUpgradeable, ReentrancyGuardUpgradeable {
         rewardPerBlockChangesCount = 3;
         lastChangeBlock = _startBlock;
         buyBackComission = 4;
-        buyBack = 0xB353eAAf9D16b7F482087816f281415fe292dE5c;
-        ROUTER_ADDRESS = 0x10ED43C718714eb63d5aA57B78B54704E256024E;
-        wbnbAddress = address(0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c);
-        liquidityProvider = ILiquidityProvider(0x2B1C93fFfF55E2620D6fb5DaD7D69A6a468C9731);
+        buyBack = 0xB353eAAf9D16b7F482087816f281415fe292dE5c;  // BuyBack-contract_addr
+        ROUTER_ADDRESS = 0x10ED43C718714eb63d5aA57B78B54704E256024E;  // PancakeRouter-contract_addr
+        wbnbAddress = address(0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c);  // WBNB-contract_addr
+        liquidityProvider = ILiquidityProvider(0x2B1C93fFfF55E2620D6fb5DaD7D69A6a468C9731);  // AdminUpgradeabilityProxy-contract_addr
         liquidityProviderApiId = 1;
         rewardTokenToWBNB = [_rewardToken, wbnbAddress];
     }
