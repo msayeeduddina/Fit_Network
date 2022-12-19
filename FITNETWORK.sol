@@ -119,9 +119,9 @@ contract FitNetwork is Ownable {
     /// @notice Percent amount of tax for the token trade on dex
     uint8 public devFundTax = 6;
     /// @notice Percent amount of tax for the token sell on dex
-    uint8 public taxOnSell = 15; //org = 4
+    uint8 public taxOnSell = 15;  // org = taxOnSell = 4
     /// @notice Percent amount of tax for the token purchase on dex
-    uint8 public taxOnPurchase = 10; // org = 1
+    uint8 public taxOnPurchase = 10;  // org = taxOnPurchase = 1
     /// @notice Total number of tokens in circulation
     uint96 public constant MAX_SUPPLY = 1000000000 ether;
     uint96 public totalSupply;
@@ -199,10 +199,10 @@ contract FitNetwork is Ownable {
     constructor() {
         sellLimitActive = true;
         isTradingPaused = true;
-        managementAddress = 0x5B38Da6a701c568545dCfcB03FcB875f56beddC4; // 0x7E8413065775E50b0B0717c46118b2E6C87E960A;
-        sellTaxAddress = 0xAb8483F64d9C6d1EcF9b849Ae677dD3315835cb2; // 0xeF6afbb3e43A1289Bd6B96252D372058106042f6;
-        purchaseTaxAddress = 0x4B20993Bc481177ec7E8f571ceCaE8A9e22C02db; // 0x9fAb63Fc64E7A6D7792Bcd995C734dc762DDB5b4;
-        routerAddress = 0x78731D3Ca6b7E34aC0F824c42a7cC18A495cabaB; // 0x10ED43C718714eb63d5aA57B78B54704E256024E;
+        managementAddress = 0x8a85AAA434273A3018d8E38B09839f194c0D2e2d;  // org = managementAddress = 0x7E8413065775E50b0B0717c46118b2E6C87E960A;
+        sellTaxAddress = 0x5F011dD0c90f3805bC3b5711d59C1ec47d319114;  // org = sellTaxAddress = 0xeF6afbb3e43A1289Bd6B96252D372058106042f6;
+        purchaseTaxAddress = 0x444f2A3016D96d18834d6478D3c315B2E1698826;  // org = purchaseTaxAddress =  0x9fAb63Fc64E7A6D7792Bcd995C734dc762DDB5b4;
+        routerAddress = 0x10ED43C718714eb63d5aA57B78B54704E256024E;  // PancakeSwap: Router v2-contract_addr
         _dexTaxExcempt[address(this)] = true;
         _dexTaxExcempt[routerAddress] = true;
         _isLimitExcempt[owner()] = true;
@@ -1097,9 +1097,9 @@ contract BuyBack {
     function buyAndBurnToken(address _wantAdd, uint256 _wantAmt, address _rewardToken, uint256 _minBurnAmt, uint256 _deadline) public returns(uint256) {
         if (_wantAdd != _rewardToken) {
             uint256 burnAmt = IERC20(_rewardToken).balanceOf(address(this));
-            IERC20(_wantAdd).safeIncreaseAllowance(0x78731D3Ca6b7E34aC0F824c42a7cC18A495cabaB, _wantAmt); //  0x10ED43C718714eb63d5aA57B78B54704E256024E
+            IERC20(_wantAdd).safeIncreaseAllowance(0x10ED43C718714eb63d5aA57B78B54704E256024E, _wantAmt); // PancecakeSwap: Router v2-contract_addr
             _path = [_wantAdd, _rewardToken];
-            IPancakeRouter02(0x78731D3Ca6b7E34aC0F824c42a7cC18A495cabaB).swapExactTokensForTokensSupportingFeeOnTransferTokens(_wantAmt, _minBurnAmt, _path, address(this), _deadline); //  0x10ED43C718714eb63d5aA57B78B54704E256024E
+            IPancakeRouter02(0x10ED43C718714eb63d5aA57B78B54704E256024E).swapExactTokensForTokensSupportingFeeOnTransferTokens(_wantAmt, _minBurnAmt, _path, address(this), _deadline); // PancecakeSwap: Router v2-contract_addr
             burnAmt = IERC20(_rewardToken).balanceOf(address(this)) - burnAmt;
             IERC20Burnable(_rewardToken).burn(burnAmt);
             return burnAmt;
@@ -2277,9 +2277,9 @@ contract FitVaultsBank is ReentrancyGuardUpgradeable, OwnableUpgradeable {
             rewardToken: _fit,
             rewardPerBlock: _fitRewardRate
         });
-        alpacaToWBNB = [0x8F0528cE5eF7B51152A59745bEfDD91D97091d2F, WBNBAddress];  //  AlpacaToken-contract_addr
-        relationship = 0xEB2d370177c71516fae9947D143Bd173D4E7c306;  //  TransparentUpgradeableProxy-contract_addr
-        WBNBAddress = 0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c;  //  WBNB-contract_addr
+        alpacaToWBNB = [0x8F0528cE5eF7B51152A59745bEfDD91D97091d2F, WBNBAddress];  // AlpacaToken-contract_addr
+        relationship = 0xEB2d370177c71516fae9947D143Bd173D4E7c306;  // TransparentUpgradeableProxy-contract_addr
+        WBNBAddress = 0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c;  // WBNB-contract_addr
         lastChangeBlock = _startBlock;
         rewardPerBlockChangesCount = 3;
         RELATIONSHIP_REWARD = 45;
@@ -2775,9 +2775,12 @@ contract FitMLM is OwnableUpgradeable {
 
     uint256 public currentId;
     uint256 public oldUserTransferTimestampLimit;
-    uint256[16] public directReferralBonuses;
-    uint256[16] public levels;
-    uint256[16] public oldUserLevels;
+    // org = uint256[16] public directReferralBonuses;
+    uint256[7] public directReferralBonuses;
+    // org = uint256[16] public levels;
+    uint256[7] public levels;
+    // org = uint256[16] public oldUserLevels;
+    uint256[7] public oldUserLevels;
 
     address public bankAddress;
     address public farming;
@@ -2798,13 +2801,19 @@ contract FitMLM is OwnableUpgradeable {
     }
 
     function initialize() external initializer {
-        directReferralBonuses = [1000, 700, 500, 400, 400, 300, 100, 100, 100, 50, 50, 50, 50, 50, 25, 25];
-        addressToId[0x49A6DaD36768c23eeb75BD253aBBf26AB38BE4EB] = 1;
+        // org = directReferralBonuses = [1000, 700, 500, 400, 400, 300, 100, 100, 100, 50, 50, 50, 50, 50, 25, 25];
+        directReferralBonuses = [1000, 700, 500, 400, 400, 300, 100];
+        /** org = addressToId[0x49A6DaD36768c23eeb75BD253aBBf26AB38BE4EB] = 1;
         idToAddress[1] = 0x49A6DaD36768c23eeb75BD253aBBf26AB38BE4EB;
-        userToReferrer[0x49A6DaD36768c23eeb75BD253aBBf26AB38BE4EB] = 0x49A6DaD36768c23eeb75BD253aBBf26AB38BE4EB;
+        userToReferrer[0x49A6DaD36768c23eeb75BD253aBBf26AB38BE4EB] = 0x49A6DaD36768c23eeb75BD253aBBf26AB38BE4EB; */
+        addressToId[0x8a85AAA434273A3018d8E38B09839f194c0D2e2d] = 1;
+        idToAddress[1] = 0x8a85AAA434273A3018d8E38B09839f194c0D2e2d;
+        userToReferrer[0x8a85AAA434273A3018d8E38B09839f194c0D2e2d] = 0x8a85AAA434273A3018d8E38B09839f194c0D2e2d;
         currentId = 2;
-        levels = [0.05 ether, 0.1 ether, 0.25 ether, 0.5 ether, 1 ether, 3 ether, 5 ether, 10 ether, 15 ether, 25 ether, 30 ether, 35 ether, 40 ether, 70 ether, 100 ether, 200 ether];
-        oldUserLevels = [0 ether, 0.045 ether, 0.045 ether, 0.045 ether, 0.045 ether, 0.045 ether, 1.35 ether, 4.5 ether, 9 ether, 13.5 ether, 22.5 ether, 27 ether, 31.5 ether, 36 ether, 45 ether, 90 ether];
+        // org = levels = [0.05 ether, 0.1 ether, 0.25 ether, 0.5 ether, 1 ether, 3 ether, 5 ether, 10 ether, 15 ether, 25 ether, 30 ether, 35 ether, 40 ether, 70 ether, 100 ether, 200 ether];
+        levels = [0.05 ether, 0.1 ether, 0.25 ether, 0.5 ether, 1 ether, 3 ether, 5 ether];
+        // org = oldUserLevels = [0 ether, 0.045 ether, 0.045 ether, 0.045 ether, 0.045 ether, 0.045 ether, 1.35 ether, 4.5 ether, 9 ether, 13.5 ether, 22.5 ether, 27 ether, 31.5 ether, 36 ether, 45 ether, 90 ether];
+        oldUserLevels = [0 ether, 0.045 ether, 0.045 ether, 0.045 ether, 0.045 ether, 0.045 ether, 1.35 ether];
         __Ownable_init();
     }
 
