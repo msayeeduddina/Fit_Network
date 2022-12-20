@@ -2776,7 +2776,7 @@ contract FitMLM is OwnableUpgradeable {
     uint256 public currentId;
     uint256 public oldUserTransferTimestampLimit;
     // org = uint256[16] public directReferralBonuses;
-    uint256[7] public directReferralBonuses;
+    uint256[2] public directReferralBonuses;
     // org = uint256[16] public levels;
     uint256[7] public levels;
     // org = uint256[16] public oldUserLevels;
@@ -2802,7 +2802,7 @@ contract FitMLM is OwnableUpgradeable {
 
     function initialize() external initializer {
         // org = directReferralBonuses = [1000, 700, 500, 400, 400, 300, 100, 100, 100, 50, 50, 50, 50, 50, 25, 25];
-        directReferralBonuses = [1000, 700, 500, 400, 400, 300, 100];
+        directReferralBonuses = [1000, 700];
         /** org = addressToId[0x49A6DaD36768c23eeb75BD253aBBf26AB38BE4EB] = 1;
         idToAddress[1] = 0x49A6DaD36768c23eeb75BD253aBBf26AB38BE4EB;
         userToReferrer[0x49A6DaD36768c23eeb75BD253aBBf26AB38BE4EB] = 0x49A6DaD36768c23eeb75BD253aBBf26AB38BE4EB; */
@@ -2811,9 +2811,9 @@ contract FitMLM is OwnableUpgradeable {
         userToReferrer[0x8a85AAA434273A3018d8E38B09839f194c0D2e2d] = 0x8a85AAA434273A3018d8E38B09839f194c0D2e2d;
         currentId = 2;
         // org = levels = [0.05 ether, 0.1 ether, 0.25 ether, 0.5 ether, 1 ether, 3 ether, 5 ether, 10 ether, 15 ether, 25 ether, 30 ether, 35 ether, 40 ether, 70 ether, 100 ether, 200 ether];
-        levels = [0.05 ether, 0.1 ether, 0.25 ether, 0.5 ether, 1 ether, 3 ether, 5 ether];
+        levels = [0.03 ether, 0.03 ether, 0.03 ether, 0.03 ether, 0.03 ether, 0.03 ether, 0.03 ether];
         // org = oldUserLevels = [0 ether, 0.045 ether, 0.045 ether, 0.045 ether, 0.045 ether, 0.045 ether, 1.35 ether, 4.5 ether, 9 ether, 13.5 ether, 22.5 ether, 27 ether, 31.5 ether, 36 ether, 45 ether, 90 ether];
-        oldUserLevels = [0 ether, 0.045 ether, 0.045 ether, 0.045 ether, 0.045 ether, 0.045 ether, 1.35 ether];
+        oldUserLevels = [0.04 ether, 0.04 ether, 0.04 ether, 0.04 ether, 0.04 ether, 0.04 ether, 0.04 ether];
         __Ownable_init();
     }
 
